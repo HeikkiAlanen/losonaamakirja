@@ -54,10 +54,8 @@ class PersonService extends AbstractService
 
     public function findFriends($id)
     {
-        $friends = [];
-        foreach ($this->findFriendIds($id) as $friendId) {
-            $friends[] = $this->findById($friendId, false);
-        }
+        $tmp = $this->findFriendIds($id);
+        $friends = $this->findBy(['id'=>$tmp], [], false);
         return $friends;
     }
 

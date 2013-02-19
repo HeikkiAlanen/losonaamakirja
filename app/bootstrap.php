@@ -16,7 +16,6 @@ use Symfony\Component\HttpKernel\KernelEvents;
 use Symfony\Component\HttpKernel\Event\KernelEvent;
 use Silex\Provider\SessionServiceProvider;
 use Doctrine\DBAL\Query\QueryBuilder;
-use Memcached;
 use Silex\Provider\MonologServiceProvider;
 use Monolog\Handler\ChromePHPHandler;
 
