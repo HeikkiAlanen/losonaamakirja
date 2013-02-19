@@ -9,6 +9,12 @@ server {
     add_header Last-Modified "";
     add_header ETag "";
 
+    proxy_buffer_size 2048k;
+    proxy_buffers 4 2048k;
+    proxy_busy_buffers_size 2048k;
+    fastcgi_buffers 8 2048k;
+    fastcgi_buffer_size 2048k;
+
     location ~* ^/api/ {
 
         # losofacebook is so slow it will die without this.

@@ -17,6 +17,8 @@ use Symfony\Component\HttpKernel\Event\KernelEvent;
 use Silex\Provider\SessionServiceProvider;
 use Doctrine\DBAL\Query\QueryBuilder;
 use Memcached;
+use Silex\Provider\MonologServiceProvider;
+use Monolog\Handler\ChromePHPHandler;
 
 $app = new Silex\Application();
 
@@ -207,7 +209,25 @@ $app->get('/api/company/{name}', function(Application $app, $name) {
 
 });
 
-
-
+$app->register(
+    new MonologServiceProvider(),[]
+);
+ 
+$app['monolog.handler'] = function () use ($app) {
+    return new ChromePHPHandler($app['monolog.level']);
+};
+if ( $app['debug'] ) {
+    
+    $logger = new Doctrine\DBAL\Logging\DebugStack();
+    
+    $app['db.config']->setSQLLogger($logger);
+    
+    $app->after(function(Request $request, Response $response) use ($app, $logger) {
+        $queries = array_slice($logger->queries, sizeof($queries) - 100);
+        foreach ($queries as $query) {
+            $app['monolog']->debug($query['sql']);
+        }
+    });
+}
 
 return $app;
