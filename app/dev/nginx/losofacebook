@@ -9,6 +9,8 @@ server {
     add_header Last-Modified "";
     add_header ETag "";
 
+    charset utf-8;
+
     proxy_buffer_size 2048k;
     proxy_buffers 4 2048k;
     proxy_busy_buffers_size 2048k;
