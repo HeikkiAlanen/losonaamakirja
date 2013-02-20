@@ -54,8 +54,15 @@ class PersonService extends AbstractService
 
     public function findFriends($id)
     {
+        $cacheId = "friends_{$id}";
+
+        if ($friends = $this->memcached->get($cacheId)) {
+            return $friends;
+        }
+
         $tmp = $this->findFriendIds($id);
         $friends = $this->findBy(['id'=>$tmp], [], false);
+        $this->memcached->set($cacheId, $friends, 60);
         return $friends;
     }
 

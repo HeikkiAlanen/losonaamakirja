@@ -111,11 +111,17 @@ class PostService
 
     public function findFriends($id)
     {
-        $friends = [];
-        foreach ($this->findFriendIds($id) as $friendId) {
-            $friends[] = $this->findById($friendId, false);
+        $cacheId = "post_friends_{$id}";
+
+        if ($friends = $this->memcached->get($cacheId)) {
+            return $friends;
         }
+
+        $tmp = $this->findFriendIds($id);
+        $friends = $this->findBy(['id'=>$tmp], [], false);
+        $this->memcached->set($cacheId, $friends, 60);
         return $friends;
+
     }
 
 
