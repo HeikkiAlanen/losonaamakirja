@@ -32,6 +32,7 @@ class CreateImagesCommand extends Command
         $db = $this->getDb();
         $imageService = $this->getImageService();
         
+        // Person images
         $images = $db->fetchAll("SELECT * FROM image WHERE type = 1");
         
         foreach($images as $image) {
@@ -39,20 +40,14 @@ class CreateImagesCommand extends Command
             $output->writeln("Recreating versions for #{$image['id']}");
         }
 
-//        $finder = new Finder();
-//
-//        $finder
-//            ->files()
-//            ->in($this->getProjectDirectory() . '/app/dev/imaginarium/people');
-//
-//        $is = $this->getImageService();
-//
-//        $this->getDb()->exec("DELETE FROM image WHERE type = 1");
-//
-//        foreach ($finder as $file) {
-//            $output->writeln("{$file->getRealpath()}");
-//            $is->createImage($file->getRealpath(), Image::TYPE_PERSON);
-//        }
+        // Company images
+        $images = $db->fetchAll("SELECT * FROM image WHERE type = 2");
+        
+        foreach($images as $image) {
+            $imageService->createCorporateVersions($image['id']);
+            $output->writeln("Recreating versions for company #{$image['id']}");
+        }
+
     }
 
     /**

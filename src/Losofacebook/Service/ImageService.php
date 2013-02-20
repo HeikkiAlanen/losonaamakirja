@@ -85,9 +85,9 @@ class ImageService
         $image->compositeImage($img, $img->getImageCompose(), $x, $y);
 
         $thumb = clone $image;
-        $thumb->cropThumbnailimage(500, 500);
+        $thumb->cropThumbnailimage(360, 360);
         $thumb->setImageCompression(self::COMPRESSION_TYPE);
-        $thumb->setImageCompressionQuality(90);
+        $thumb->setImageCompressionQuality(70);
         $thumb->writeImage($this->basePath . '/' . $id . '-thumb');
     }
 
@@ -95,13 +95,29 @@ class ImageService
     public function createVersions($id)
     {
         $img = new Imagick($this->basePath . '/' . $id);
-        $thumb = clone $img;
 
+        // Person thumbnails
+        $thumb = clone $img;
+        $thumb->cropThumbnailimage(50, 50);
+        $thumb->setImageCompression(self::COMPRESSION_TYPE);
+        $thumb->setImageCompressionQuality(40);
+        $thumb->writeImage($this->basePath . '/' . $id . '-thumb');
+
+        // Post author image
+        $thumb = clone $img;
+        $thumb->cropThumbnailimage(75, 75);
+        $thumb->setImageCompression(self::COMPRESSION_TYPE);
+        $thumb->setImageCompressionQuality(50);
+        $thumb->writeImage($this->basePath . '/' . $id . '-mini');
+
+        // Person profile images
+        $thumb = clone $img;
         $thumb->cropThumbnailimage(157, 157);
         $thumb->setImageCompression(self::COMPRESSION_TYPE);
         $thumb->setImageCompressionQuality(50);
         $thumb->writeImage($this->basePath . '/' . $id . '-profile');
-    }
+
+        }
 
     public function getImageResponse($id, $version = null)
     {
@@ -109,6 +125,7 @@ class ImageService
 
         if ($version) {
             $path .= '-' . $version;
+//            console.debug($path);
         }
 
         if (!is_readable($path)) {
