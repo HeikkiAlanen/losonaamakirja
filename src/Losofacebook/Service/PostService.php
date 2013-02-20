@@ -6,6 +6,7 @@ use Losofacebook\Post;
 use Losofacebook\Comment;
 use Losofacebook\Service\PersonService;
 use DateTime;
+use Memcached;
 
 /**
  * Image service
@@ -127,6 +128,12 @@ class PostService
 
     public function findFriendIds($id)
     {
+        $cacheId = "post_friend_ids_{$id}";
+
+        if ($ids = $this->memcached->get($cacheId)) {
+            return $ids;
+        }
+        
         $myAdded = $this->conn->fetchAll(
             "SELECT target_id FROM friendship WHERE source_id = ?",
             [$id]
@@ -147,7 +154,9 @@ class PostService
             return $result;
         }, []);
 
-        return array_unique(array_merge($myAdded, $meAdded));
+        $ret = array_unique(array_merge($myAdded, $meAdded));
+        $this->memcached->set($cacheId, $ret, 60);
+        return $ret;
     }
 
 
