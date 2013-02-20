@@ -97,10 +97,10 @@ class ImageService
         $img = new Imagick($this->basePath . '/' . $id);
         $thumb = clone $img;
 
-        $thumb->cropThumbnailimage(50, 50);
+        $thumb->cropThumbnailimage(157, 157);
         $thumb->setImageCompression(self::COMPRESSION_TYPE);
-        $thumb->setImageCompressionQuality(70);
-        $thumb->writeImage($this->basePath . '/' . $id . '-thumb');
+        $thumb->setImageCompressionQuality(50);
+        $thumb->writeImage($this->basePath . '/' . $id . '-profile');
     }
 
     public function getImageResponse($id, $version = null)
