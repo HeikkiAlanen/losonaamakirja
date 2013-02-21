@@ -87,10 +87,10 @@ class ImageService
         $image->compositeImage($img, $img->getImageCompose(), $x, $y);
 
         $thumb = clone $image;
+        $thumb->stripImage();
         $thumb->cropThumbnailimage(360, 360);
         $thumb->setImageCompression(self::COMPRESSION_TYPE);
         $thumb->setImageCompressionQuality(70);
-        $thumb->stripImage();
         $thumb->writeImage($this->basePath . '/' . $id . '-thumb');
     }
 
@@ -104,33 +104,66 @@ class ImageService
         $thumb->stripImage();
         $thumb->cropThumbnailimage(50, 50);
         $thumb->setImageCompression(self::COMPRESSION_TYPE);
-        $thumb->setImageCompressionQuality(40);
+        $thumb->setImageCompressionQuality(50);
         $thumb->writeImage($this->basePath . '/' . $id . '-thumb');
+        
+        $versionPath = $this->basePath . '/' . $id . '-thumb';
+        $linkPath = realpath($this->basePath . '/../../../web/images/') . '/' . $id . '-thumb.jpg';
+        
+        // Create symbolic link
+        if (!is_link($linkPath)) {
+            symlink($versionPath, $linkPath);
+        }
 
         // Post author image
         $thumb = clone $img;
         $thumb->stripImage();
         $thumb->cropThumbnailimage(75, 75);
         $thumb->setImageCompression(self::COMPRESSION_TYPE);
-        $thumb->setImageCompressionQuality(50);
+        $thumb->setImageCompressionQuality(60);
         $thumb->writeImage($this->basePath . '/' . $id . '-mini');
+
+        $versionPath = $this->basePath . '/' . $id . '-mini';
+        $linkPath = realpath($this->basePath . '/../../../web/images/') . '/' . $id . '-mini.jpg';
+        
+        // Create symbolic link
+        if (!is_link($linkPath)) {
+            symlink($versionPath, $linkPath);
+        }
 
         // Person profile images
         $thumb = clone $img;
         $thumb->stripImage();
         $thumb->cropThumbnailimage(157, 157);
         $thumb->setImageCompression(self::COMPRESSION_TYPE);
-        $thumb->setImageCompressionQuality(50);
+        $thumb->setImageCompressionQuality(60);
         $thumb->writeImage($this->basePath . '/' . $id . '-profile');
 
-        // COmpany page person images
+        $versionPath = $this->basePath . '/' . $id . '-profile';
+        $linkPath = realpath($this->basePath . '/../../../web/images/') . '/' . $id . '-profile.jpg';
+        
+        // Create symbolic link
+        if (!is_link($linkPath)) {
+            symlink($versionPath, $linkPath);
+        }
+
+        // Company page person images
         $thumb = clone $img;
         $thumb->stripImage();
         $thumb->cropThumbnailimage(260, 260);
         $thumb->setImageCompression(self::COMPRESSION_TYPE);
         $thumb->setImageCompressionQuality(60);
         $thumb->writeImage($this->basePath . '/' . $id . '-midi');
+
+        $versionPath = $this->basePath . '/' . $id . '-midi';
+        $linkPath = realpath($this->basePath . '/../../../web/images/') . '/' . $id . '-midi.jpg';
+        
+        // Create symbolic link
+        if (!is_link($linkPath)) {
+            symlink($versionPath, $linkPath);
         }
+
+}
 
     public function getImageResponse($id, $version = null)
     {
