@@ -8,6 +8,8 @@ use Symfony\Component\HttpFoundation\Response;
 use Losofacebook\Image;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
+// työkaluja optipng jpegoptim libjpeg-progs
+
 /**
  * Image service
  */
@@ -88,6 +90,7 @@ class ImageService
         $thumb->cropThumbnailimage(360, 360);
         $thumb->setImageCompression(self::COMPRESSION_TYPE);
         $thumb->setImageCompressionQuality(70);
+        $thumb->stripImage();
         $thumb->writeImage($this->basePath . '/' . $id . '-thumb');
     }
 
@@ -98,6 +101,7 @@ class ImageService
 
         // Person thumbnails
         $thumb = clone $img;
+        $thumb->stripImage();
         $thumb->cropThumbnailimage(50, 50);
         $thumb->setImageCompression(self::COMPRESSION_TYPE);
         $thumb->setImageCompressionQuality(40);
@@ -105,6 +109,7 @@ class ImageService
 
         // Post author image
         $thumb = clone $img;
+        $thumb->stripImage();
         $thumb->cropThumbnailimage(75, 75);
         $thumb->setImageCompression(self::COMPRESSION_TYPE);
         $thumb->setImageCompressionQuality(50);
@@ -112,6 +117,7 @@ class ImageService
 
         // Person profile images
         $thumb = clone $img;
+        $thumb->stripImage();
         $thumb->cropThumbnailimage(157, 157);
         $thumb->setImageCompression(self::COMPRESSION_TYPE);
         $thumb->setImageCompressionQuality(50);
