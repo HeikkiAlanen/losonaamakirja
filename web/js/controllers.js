@@ -34,7 +34,7 @@ function PersonCtrl($scope, $routeParams, Person, Post, Friend) {
 
     $scope.person = Person.get({username: $routeParams.username}, function(person) {
         $scope.backgroundImage = 'http://place.manatee.lc/' + person.backgroundId + '/2000/500.jpg';
-        $scope.profileImage = '/api/image/' + person.primaryImageId + '/profile';
+        $scope.profileImage = '/images/' + person.primaryImageId + '-profile.jpg';
 
         $scope.birthdayx = Friend.query({ 'username': person.username, 'birthday': true });
 
@@ -54,7 +54,7 @@ function CompanyCtrl($scope, $routeParams, Company, Person) {
     $scope.company = Company.get({ 'name': $routeParams.name }, function(company) {
 
         $scope.backgroundImage = 'http://place.manatee.lc/' + company.backgroundId + '/2000/500.jpg';
-        $scope.profileImage = '/api/image/' + company.primaryImageId + '/thumb';
+        $scope.profileImage = '/images/' + company.primaryImageId + '-thumb.jpg';
 
         $scope.persons = Person.query({ 'company': company.name });
 

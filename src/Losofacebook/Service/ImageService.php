@@ -92,7 +92,16 @@ class ImageService
         $thumb->setImageCompression(self::COMPRESSION_TYPE);
         $thumb->setImageCompressionQuality(70);
         $thumb->writeImage($this->basePath . '/' . $id . '-thumb');
-    }
+
+        $versionPath = $this->basePath . '/' . $id . '-thumb';
+        $linkPath = realpath($this->basePath . '/../../../web/images/') . '/' . $id . '-thumb.jpg';
+        
+        // Create symbolic link
+        if (!is_link($linkPath)) {
+            symlink($versionPath, $linkPath);
+        }
+
+        }
 
 
     public function createVersions($id)
