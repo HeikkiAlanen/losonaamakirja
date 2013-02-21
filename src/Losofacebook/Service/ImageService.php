@@ -123,6 +123,13 @@ class ImageService
         $thumb->setImageCompressionQuality(50);
         $thumb->writeImage($this->basePath . '/' . $id . '-profile');
 
+        // COmpany page person images
+        $thumb = clone $img;
+        $thumb->stripImage();
+        $thumb->cropThumbnailimage(260, 260);
+        $thumb->setImageCompression(self::COMPRESSION_TYPE);
+        $thumb->setImageCompressionQuality(60);
+        $thumb->writeImage($this->basePath . '/' . $id . '-midi');
         }
 
     public function getImageResponse($id, $version = null)
