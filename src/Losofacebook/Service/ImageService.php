@@ -93,15 +93,14 @@ class ImageService
         $thumb->setImageCompressionQuality(70);
         $thumb->writeImage($this->basePath . '/' . $id . '-thumb');
 
-        $versionPath = $this->basePath . '/' . $id . '-thumb';
-        $linkPath = realpath($this->basePath . '/../../../web/images/') . '/' . $id . '-thumb.jpg';
-        
         // Create symbolic link
+        $versionPath = $this->basePath . '/' . $id . '-thumb';
+        $linkPath = realpath($this->basePath . '/../../../web/images/') . '/' . $id . '-thumb.jpg';        
         if (!is_link($linkPath)) {
             symlink($versionPath, $linkPath);
         }
 
-        }
+    }
 
 
     public function createVersions($id)
@@ -116,10 +115,9 @@ class ImageService
         $thumb->setImageCompressionQuality(50);
         $thumb->writeImage($this->basePath . '/' . $id . '-thumb');
         
-        $versionPath = $this->basePath . '/' . $id . '-thumb';
-        $linkPath = realpath($this->basePath . '/../../../web/images/') . '/' . $id . '-thumb.jpg';
-        
         // Create symbolic link
+        $versionPath = $this->basePath . '/' . $id . '-thumb';
+        $linkPath = realpath($this->basePath . '/../../../web/images/') . '/' . $id . '-thumb.jpg';        
         if (!is_link($linkPath)) {
             symlink($versionPath, $linkPath);
         }
@@ -132,10 +130,9 @@ class ImageService
         $thumb->setImageCompressionQuality(60);
         $thumb->writeImage($this->basePath . '/' . $id . '-mini');
 
+        // Create symbolic link
         $versionPath = $this->basePath . '/' . $id . '-mini';
         $linkPath = realpath($this->basePath . '/../../../web/images/') . '/' . $id . '-mini.jpg';
-        
-        // Create symbolic link
         if (!is_link($linkPath)) {
             symlink($versionPath, $linkPath);
         }
@@ -148,10 +145,9 @@ class ImageService
         $thumb->setImageCompressionQuality(60);
         $thumb->writeImage($this->basePath . '/' . $id . '-profile');
 
-        $versionPath = $this->basePath . '/' . $id . '-profile';
-        $linkPath = realpath($this->basePath . '/../../../web/images/') . '/' . $id . '-profile.jpg';
-        
         // Create symbolic link
+        $versionPath = $this->basePath . '/' . $id . '-profile';
+        $linkPath = realpath($this->basePath . '/../../../web/images/') . '/' . $id . '-profile.jpg';        
         if (!is_link($linkPath)) {
             symlink($versionPath, $linkPath);
         }
@@ -164,10 +160,9 @@ class ImageService
         $thumb->setImageCompressionQuality(60);
         $thumb->writeImage($this->basePath . '/' . $id . '-midi');
 
+        // Create symbolic link
         $versionPath = $this->basePath . '/' . $id . '-midi';
         $linkPath = realpath($this->basePath . '/../../../web/images/') . '/' . $id . '-midi.jpg';
-        
-        // Create symbolic link
         if (!is_link($linkPath)) {
             symlink($versionPath, $linkPath);
         }
@@ -180,7 +175,6 @@ class ImageService
 
         if ($version) {
             $path .= '-' . $version;
-//            console.debug($path);
         }
 
         if (!is_readable($path)) {
@@ -192,6 +186,5 @@ class ImageService
         $response->headers->set('Content-type', 'image/jpeg');
         return $response;
     }
-
 
 }
