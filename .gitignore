@@ -3,3 +3,6 @@
 nbproject
 vendor
 web/images
+app/dev/closure
+app/dev/yui
+
